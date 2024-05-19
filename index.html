@@ -231,11 +231,11 @@ loginForm.addEventListener('submit', async (event) => {
 </div>
 
         <div class="form-details" data-aos="zoom-in" >
-		    <input type="text" name="name" id="name" placeholder="Name" required>
-            <input type="email" name="email" id="email" placeholder="Email" required style="text-transform: none;">
-			<input type="text" name="subject" placeholder="Subject" required id="subject" style="width:75%; margin-top:-20px;">
+		    <input type="text" name="name" id="namecontact" placeholder="Name" required>
+            <input type="email" name="email" id="emailcontact" placeholder="Email" required style="text-transform: none;">
+			<input type="text" name="subject" placeholder="Subject" required id="subjectcontact" style="width:75%; margin-top:-20px;">
 
-            <textarea name="message" id="message" cols="52" rows="7" placeholder="Message" required></textarea>
+            <textarea name="message" id="messagecontact" cols="52" rows="7" placeholder="Message" required></textarea>
         <button type="submit" class="btn-submit" id="newOrderForm" style="color:#fff; background:#2e6476;">Submit Message</button>
 			
 		 </div>
@@ -309,10 +309,10 @@ loginForm.addEventListener('submit', async (event) => {
 
 <script>
 
-var userName = document.getElementById("name");
-var userEmail = document.getElementById("email");
-var userMessage = document.getElementById("message");
-var userSubject = document.getElementById("subject");
+var userNamecontact = document.getElementById("namecontact");
+var userEmailcontact = document.getElementById("emailcontact");
+var userMessagecontact = document.getElementById("messagecontact");
+var userSubjectcontact = document.getElementById("subjectcontact");
 var orderFormSubmit = document.getElementById("newOrderForm");
 var loadingAnimation = document.getElementById("loadingAnimation");
 const body = document.querySelector("body");
@@ -324,10 +324,10 @@ orderFormSubmit.addEventListener("click", function(event) {
   loadingAnimation.style.display = "block";
 
   var formData = {
-    name: userName.value,
-    email: userEmail.value,
-    message: userMessage.value,
-    subject: userSubject.value,
+    name: userNamecontact.value,
+    email: userEmailcontact.value,
+    message: userMessagecontact.value,
+    subject: userSubjectcontact.value,
   };
 
   fetch("https://mental-health-backend-one.vercel.app/send-data-emocare", {
