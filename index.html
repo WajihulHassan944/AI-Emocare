@@ -316,16 +316,10 @@ var userSubject = document.getElementById("subject");
 var orderFormSubmit = document.getElementById("newOrderForm");
 var loadingAnimation = document.getElementById("loadingAnimation");
 const body = document.querySelector("body");
-const emailRegex = /^[^\s@]+@[^\s@]+\.(com|net|org|edu|gov|mil|biz|info|name|museum|co\.uk|org\.uk|net\.uk|ac\.uk|sch\.uk|aero|asia|cat|coop|jobs|mobi|museum|tel|travel)$/i;
 
 orderFormSubmit.addEventListener("click", function(event) {
   event.preventDefault(); 
   
-  // Email validation
-  if (!emailRegex.test(userEmail.value)) {
-    alert('Invalid email');
-    return;
-  }
 
   loadingAnimation.style.display = "block";
 
