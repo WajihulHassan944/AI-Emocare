@@ -31,14 +31,7 @@
                   <p>Home</p>
                 </div>
               </div>
-              <div class="link-flex">
-                <div class="link-logo">
-                  <i class="fa-solid fa-circle-exclamation"></i>
-                </div>
-                <div class="link-text">
-                  <p>Guidelines</p>
-                </div>
-              </div>
+             
               <div class="link-flex" onclick="communityButton()">
                 <div class="link-logo">
                   <i class="fa-brands fa-elementor"></i>
@@ -63,20 +56,13 @@
                   <p>Edit Profile</p>
                 </div>
               </div>
+             
               <div class="link-flex">
                 <div class="link-logo">
-                  <i class="fa-solid fa-chart-simple"></i>
+                  <i class="fa-sharp fa-solid fa-user"></i>
                 </div>
                 <div class="link-text">
-                  <p>Trends</p>
-                </div>
-              </div>
-              <div class="link-flex">
-                <div class="link-logo">
-                  <i class="fa-sharp fa-solid fa-bell"></i>
-                </div>
-                <div class="link-text">
-                  <p>Notifications</p>
+                 <a href="../index.html" style="text-decoration:none;"><p>Logout</p></a>
                 </div>
               </div>
             </div>
@@ -204,6 +190,87 @@
         Saving...
     </div>
 
+
+
+
+
+<div class="forum" id="anxietyDiv" >
+<div style="background:#c0dbef; display:flex;justify-content:center;align-items:center; flex-direction:column; width:50%; padding:30px; border-radius:5px;
+margin-top:3%;">
+<h1>Standard Guidelines for Reducing Anxiety!</h1>
+			<p style="text-align:justify; ">
+			Managing anxiety effectively involves a combination of lifestyle changes, mental health practices, and professional support. Regular physical exercise, such as running, yoga, or swimming, can help lower anxiety levels by releasing endorphins and reducing stress hormones. Practicing mindfulness and relaxation techniques, including meditation, deep breathing, and progressive muscle relaxation, can calm the mind and reduce anxiety symptoms. Maintaining a balanced diet, with an emphasis on whole foods, lean proteins, and healthy fats, supports overall brain health and emotional stability. Ensuring adequate sleep by sticking to a regular sleep schedule is crucial for reducing anxiety. Setting realistic expectations, breaking tasks into smaller steps, and managing time effectively can prevent feelings of being overwhelmed. Building a strong support network of friends, family, or support groups provides emotional reassurance and reduces feelings of isolation. Limiting caffeine and alcohol, which can exacerbate anxiety, is also beneficial. Finally, seeking professional help, such as therapy or counseling, provides tailored strategies for managing anxiety effectively.
+			
+			</p>
+		</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="forum" id="depressionDiv" >
+<div style="background:#ebe0b4; display:flex;justify-content:center;align-items:center; flex-direction:column; width:50%; padding:30px; border-radius:5px;
+margin-top:5%;">
+<h1>Standard Guidelines for Reducing Depression!</h1>
+			<p style="text-align:justify; ">
+			Addressing depression requires a multifaceted approach that includes lifestyle modifications, mental health practices, and professional intervention. Regular physical exercise, like walking, jogging, or yoga, can significantly improve mood by boosting endorphins and serotonin levels. Engaging in mindfulness and relaxation techniques, such as meditation and deep-breathing exercises, helps reduce negative thought patterns and promotes mental clarity. A balanced diet rich in nutrients, including omega-3 fatty acids, vitamins, and minerals, supports brain health and emotional stability. Ensuring consistent, quality sleep by maintaining a regular sleep schedule is vital for mood regulation. Setting small, achievable goals can help combat feelings of overwhelm and build a sense of accomplishment. Building and maintaining strong social connections with friends, family, or support groups provides emotional support and reduces isolation. Limiting alcohol and avoiding recreational drugs, which can worsen depression, is important. Seeking professional help, such as therapy or medication prescribed by a healthcare provider, offers specialized and effective treatment plans tailored to individual needs.
+			
+			</p>
+		</div>
+</div>
+
+
+
+
+
+
+<div class="forum" id="stressDiv" >
+<div style="background:#efc7b3; display:flex;justify-content:center;align-items:center; flex-direction:column; width:50%; padding:30px; border-radius:5px;
+margin-top:5%;">
+<h1>Standard Guidelines for Reducing Stress!</h1>
+			<p style="text-align:justify; ">
+			Reducing stress effectively involves adopting a holistic approach encompassing physical, mental, and lifestyle strategies. Regular physical activity, such as walking, yoga, or strength training, is crucial as it helps to release endorphins, the body's natural stress relievers. Practicing mindfulness and relaxation techniques, including meditation and deep-breathing exercises, can significantly enhance mental well-being. Maintaining a healthy diet, rich in fruits, vegetables, and whole grains, supports overall health and resilience to stress. Establishing a consistent sleep schedule ensures adequate rest, which is vital for managing stress. Setting realistic goals, prioritizing tasks, and breaking them into manageable steps can alleviate feelings of overwhelm. Additionally, fostering strong social connections provides emotional support and a sense of belonging. Limiting exposure to stressors, such as reducing screen time and managing time effectively, further aids in stress reduction. Seeking professional help when necessary ensures access to specialized strategies for managing stress.
+			
+			</p>
+		</div>
+</div>
+
+
+
+<style> #stressDiv, #depressionDiv, #anxietyDiv, #healthDiv{
+	display:none;
+}</style>
+
+
+
+
+
+
+
+<div class="forum" id="healthDiv" >
+<div style="background:#d7b0f4; display:flex;justify-content:center;align-items:center; flex-direction:column; width:50%; padding:30px; border-radius:5px;
+margin-top:5%;">
+<h1>Mental Health Precautionary Measures!</h1>
+			<p style="text-align:justify; ">
+			Taking precautionary measures for mental health involves proactive strategies to maintain and enhance psychological well-being. Regular physical exercise, such as walking, swimming, or yoga, supports both physical and mental health by releasing endorphins and reducing stress. Practicing mindfulness and relaxation techniques, including meditation, deep breathing, and progressive muscle relaxation, helps manage stress and cultivate a sense of calm. Maintaining a balanced diet, rich in essential nutrients, promotes overall brain health and emotional stability. Ensuring adequate, quality sleep by following a consistent sleep schedule is crucial for mental health.
+
+Building and nurturing strong social connections with friends, family, and support networks provides emotional support and a sense of belonging. Engaging in hobbies and activities that bring joy and fulfillment can enhance life satisfaction and reduce stress. Limiting exposure to negative media and reducing screen time can prevent information overload and anxiety. Establishing healthy boundaries, managing time effectively, and setting realistic goals help prevent burnout and maintain balance.
+
+Regularly practicing self-reflection and self-care activities ensures ongoing mental health maintenance. Finally, seeking professional help when needed, such as therapy or counseling, provides access to effective strategies and support tailored to individual needs.
+			</p>
+		</div>
+</div>
+
+
+
+
+
+
 <div class="forum" id="divTwo">
 
 <h1>Welcome to the Emocare Blogs!</h1>
@@ -230,7 +297,7 @@ async function fetchUserName() {
     const userId = getUserIdFromUrlThree();
 
     try {
-      const response = await fetch(`https://brick-red-ostrich-gear.cyclic.app/api/users/${userId}`);
+      const response = await fetch(`https://mental-health-backend-one.vercel.app/api/users/${userId}`);
 
         if (response.ok) {
             console.log('response was ok');
@@ -260,7 +327,7 @@ const loadingDivForum = document.getElementById('loading-div-forum');
 
  loadingDivForum.style.display = "block";
     // Send the form data to the backend
-    const response = await fetch('https://brick-red-ostrich-gear.cyclic.app/uploadforum', {
+    const response = await fetch('https://mental-health-backend-one.vercel.app/uploadforum', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -287,7 +354,7 @@ const loadingDivForum = document.getElementById('loading-div-forum');
 // Function to fetch forum posts from the backend and render them dynamically
 async function fetchAndRenderForums() {
     try {
-        const response = await fetch('https://brick-red-ostrich-gear.cyclic.app/myForums'); // Fetch forum posts from the backend
+        const response = await fetch('https://mental-health-backend-one.vercel.app/myForums'); // Fetch forum posts from the backend
         const forums = await response.json(); // Extract forum posts from the response
 
         const parentDiv = document.getElementById('parentForm'); // Get the parent div where forum posts will be rendered
@@ -632,27 +699,27 @@ circle.style.background = `conic-gradient(
                       
        <div class="main-cards_DIV">
         <div class="multpleCards_div">
-           <div class="cardTwo" style="background:#c0dbef;">
+           <div class="cardTwo" style="background:#c0dbef; cursor:pointer;" onclick="anxietyShow()">
             <p>Standard Guidelines for reducing</p>
             <div class="second-cardInfoBox_DV">
               <h2 style="color:#34a4fe; font-size:20px;">Anxiety</h2>
             
             </div>
           </div>
-         <div class="cardTwo">
+         <div class="cardTwo" onclick="depressionShow()" style="cursor:pointer;">
             <p>Standard Guidelines for reducing</p>
             <div class="second-cardInfoBox_DV">
               <h2 style="font-size:20px;">Depression</h2>
             
             </div>
           </div>
-          <div class="cardThree">
+          <div class="cardThree" onclick="stressShow()" style="cursor:pointer;">
             <p>Standard Guidelines for reducing</p>
             <div class="third-cardInfoBox_DV">
               <h2 style="font-size:20px;">Stress</h2>
              </div>
             </div>
-           <div class="cardTwo" style="background:#d7b0f4;">
+           <div class="cardTwo" style="background:#d7b0f4; cursor:pointer;" onclick="healthShow()">
             <p>Control</p>
             <div class="second-cardInfoBox_DV">
               <h2 style="color:#9521fe;font-size:20px;">Health Precautionary Measures</h2>
@@ -766,7 +833,7 @@ const loadingDiv = document.getElementById('loading-div');
 	   loadingDiv.style.display = 'block';
    
         // Send the PUT request using fetch with async/await
-        const response = await fetch(`https://brick-red-ostrich-gear.cyclic.app/api/updateUser/${userIds}`, {
+        const response = await fetch(`https://mental-health-backend-one.vercel.app/api/updateUser/${userIds}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -795,6 +862,12 @@ const dashboardDivTwo = document.getElementById("divTwo");
 const dashboardDivThree = document.getElementById("divThree");
 
 
+const anxietyDivOne = document.getElementById("anxietyDiv");
+const depressionDivOne = document.getElementById("depressionDiv");
+const stressDivOne = document.getElementById("stressDiv");
+const healthDivOne = document.getElementById("healthDiv");
+
+
 
 
 function editButton(){
@@ -809,6 +882,11 @@ function communityButton(){
 	 dashboardDivThree.style.display = "none";
 	 dashboardDivTwo.style.display = "flex";
 	  
+	  	depressionDivOne.style.display = "none";
+	stressDivOne.style.display = "none";
+	healthDivOne.style.display = "none";
+	anxietyDivOne.style.display = "none";
+
 }
 
 function homeButton(){
@@ -816,13 +894,67 @@ function homeButton(){
 	 dashboardDivOne.style.display = "none";
 	 dashboardDivThree.style.display = "block";
 	 dashboardDivTwo.style.display = "none";
-	  
+	
+	depressionDivOne.style.display = "none";
+	stressDivOne.style.display = "none";
+	healthDivOne.style.display = "none";
+	anxietyDivOne.style.display = "none";
+	
 }
 
 function editButton(){
 	
 	 dashboardDivOne.style.display = "block";
 	  
+}
+
+
+
+function anxietyShow(){
+	anxietyDivOne.style.display = "flex";
+	 dashboardDivOne.style.display = "none";
+	 dashboardDivThree.style.display = "none";
+	 dashboardDivTwo.style.display = "none";
+	
+	depressionDivOne.style.display = "none";
+	stressDivOne.style.display = "none";
+	healthDivOne.style.display = "none";
+	
+	
+	
+}
+
+function depressionShow(){
+	depressionDivOne.style.display = "flex";
+	 dashboardDivOne.style.display = "none";
+	 dashboardDivThree.style.display = "none";
+	 dashboardDivTwo.style.display = "none";
+	stressDivOne.style.display = "none";
+	healthDivOne.style.display = "none";
+	anxietyDivOne.style.display = "none";
+
+}
+
+function stressShow(){
+	stressDivOne.style.display = "flex";
+	 dashboardDivOne.style.display = "none";
+	 dashboardDivThree.style.display = "none";
+	 dashboardDivTwo.style.display = "none";
+		depressionDivOne.style.display = "none";
+	healthDivOne.style.display = "none";
+	anxietyDivOne.style.display = "none";
+
+}
+
+function healthShow(){
+	healthDivOne.style.display = "flex";
+	 dashboardDivOne.style.display = "none";
+	 dashboardDivThree.style.display = "none";
+	 dashboardDivTwo.style.display = "none";
+		depressionDivOne.style.display = "none";
+	stressDivOne.style.display = "none";
+	anxietyDivOne.style.display = "none";
+
 }
 
 </script>
