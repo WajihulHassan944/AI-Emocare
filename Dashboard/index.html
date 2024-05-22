@@ -56,6 +56,14 @@
                   <p>Edit Profile</p>
                 </div>
               </div>
+			   <div class="link-flex" onclick="chatHistoryButton()" style="cursor:pointer;">
+                <div class="link-logo">
+                  <i class="fa-sharp fa-solid fa-comments"></i>
+                </div>
+                <div class="link-text">
+                  <p>Chat History</p>
+                </div>
+              </div>
              
               <div class="link-flex">
                 <div class="link-logo">
@@ -196,7 +204,8 @@
 
 <div class="forum" id="anxietyDiv" >
 <div style="background:#c0dbef; display:flex;justify-content:center;align-items:center; flex-direction:column; width:50%; padding:30px; border-radius:5px;
-margin-top:3%;">
+margin-top:3%;position:relative;">
+  <button onClick="hidescreen()" class="absButton"><i class="fa fa-times"></i></button>
 <h1>Standard Guidelines for Reducing Anxiety!</h1>
 			<p style="text-align:justify; ">
 			Managing anxiety effectively involves a combination of lifestyle changes, mental health practices, and professional support. Regular physical exercise, such as running, yoga, or swimming, can help lower anxiety levels by releasing endorphins and reducing stress hormones. Practicing mindfulness and relaxation techniques, including meditation, deep breathing, and progressive muscle relaxation, can calm the mind and reduce anxiety symptoms. Maintaining a balanced diet, with an emphasis on whole foods, lean proteins, and healthy fats, supports overall brain health and emotional stability. Ensuring adequate sleep by sticking to a regular sleep schedule is crucial for reducing anxiety. Setting realistic expectations, breaking tasks into smaller steps, and managing time effectively can prevent feelings of being overwhelmed. Building a strong support network of friends, family, or support groups provides emotional reassurance and reduces feelings of isolation. Limiting caffeine and alcohol, which can exacerbate anxiety, is also beneficial. Finally, seeking professional help, such as therapy or counseling, provides tailored strategies for managing anxiety effectively.
@@ -215,7 +224,8 @@ margin-top:3%;">
 
 <div class="forum" id="depressionDiv" >
 <div style="background:#ebe0b4; display:flex;justify-content:center;align-items:center; flex-direction:column; width:50%; padding:30px; border-radius:5px;
-margin-top:3%;">
+margin-top:3%;position:relative;">
+  <button onClick="hidescreen()" class="absButton"><i class="fa fa-times"></i></button>
 <h1>Standard Guidelines for Reducing Depression!</h1>
 			<p style="text-align:justify; ">
 			Addressing depression requires a multifaceted approach that includes lifestyle modifications, mental health practices, and professional intervention. Regular physical exercise, like walking, jogging, or yoga, can significantly improve mood by boosting endorphins and serotonin levels. Engaging in mindfulness and relaxation techniques, such as meditation and deep-breathing exercises, helps reduce negative thought patterns and promotes mental clarity. A balanced diet rich in nutrients, including omega-3 fatty acids, vitamins, and minerals, supports brain health and emotional stability. Ensuring consistent, quality sleep by maintaining a regular sleep schedule is vital for mood regulation. Setting small, achievable goals can help combat feelings of overwhelm and build a sense of accomplishment. Building and maintaining strong social connections with friends, family, or support groups provides emotional support and reduces isolation. Limiting alcohol and avoiding recreational drugs, which can worsen depression, is important. Seeking professional help, such as therapy or medication prescribed by a healthcare provider, offers specialized and effective treatment plans tailored to individual needs.
@@ -231,7 +241,8 @@ margin-top:3%;">
 
 <div class="forum" id="stressDiv" >
 <div style="background:#efc7b3; display:flex;justify-content:center;align-items:center; flex-direction:column; width:50%; padding:30px; border-radius:5px;
-margin-top:3%;">
+margin-top:3%; position:relative;">
+  <button onClick="hidescreen()" class="absButton"><i class="fa fa-times"></i></button>
 <h1>Standard Guidelines for Reducing Stress!</h1>
 			<p style="text-align:justify; ">
 			Reducing stress effectively involves adopting a holistic approach encompassing physical, mental, and lifestyle strategies. Regular physical activity, such as walking, yoga, or strength training, is crucial as it helps to release endorphins, the body's natural stress relievers. Practicing mindfulness and relaxation techniques, including meditation and deep-breathing exercises, can significantly enhance mental well-being. Maintaining a healthy diet, rich in fruits, vegetables, and whole grains, supports overall health and resilience to stress. Establishing a consistent sleep schedule ensures adequate rest, which is vital for managing stress. Setting realistic goals, prioritizing tasks, and breaking them into manageable steps can alleviate feelings of overwhelm. Additionally, fostering strong social connections provides emotional support and a sense of belonging. Limiting exposure to stressors, such as reducing screen time and managing time effectively, further aids in stress reduction. Seeking professional help when necessary ensures access to specialized strategies for managing stress.
@@ -242,19 +253,161 @@ margin-top:3%;">
 
 
 
-<style> #stressDiv, #depressionDiv, #anxietyDiv, #healthDiv{
+<style> #stressDiv, #depressionDiv, #anxietyDiv, #healthDiv, #chatHistoryDiv{
 	display:none;
-}</style>
+}
+.absButton{
+	position:absolute;
+	top:20px;
+	right:30px;
+	background:none;
+	border:none;
+	outline:none;
+}
+.absButtonCommunity{
+	top:30px;
+	right:70px;
+	background:orange;
+	color:#fff;
+	cursor:pointer;
+	padding:8px 20px;
+	transition:0.2s ease;
+	
+}
+.absButtonCommunity:hover{
+	color:orange;
+	border:2px solid orange;
+	background:none;
+}
+.absButton i{
+	font-size:20px;
+	color:crimson;
+	cursor:pointer;
+}
+.absButton i:hover{
+	transform:scale(1.1);
+}
+</style>
 
 
 
 
+
+
+<div class="forum" id="chatHistoryDiv" style="position:relative;">
+
+  <button onClick="hidescreen()" class="absButton absButtonCommunity" >Close</button>
+
+<h1>My Chat History!</h1>
+
+<div id="parentForChat">
+
+
+<!--<div id="newDateConversation">
+<h2>13/07/2024</h2>
+<p class="user">Aoa </p>
+<p class="chatbot">Wsalam</p>
+</div>
+-->
+
+
+</div>
+
+
+
+
+</div>
+<script>
+function getUserIdFromUrlFour() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    return urlSearchParams.get('objectId');
+}
+
+async function fetchAndRenderMessages() {
+    const userId = getUserIdFromUrlFour();
+
+    try {
+        const response = await fetch(`https://mental-health-backend-one.vercel.app/messages/${userId}`);
+        const result = await response.json();
+
+        const parentDiv = document.getElementById('parentForChat');
+
+        if (result.status === 'success') {
+            if (result.data.length === 0) {
+                const noChatsHeader = document.createElement('h1');
+                noChatsHeader.textContent = 'No chats';
+                parentDiv.appendChild(noChatsHeader);
+            } else {
+                result.data.forEach(dayData => {
+                    const dateConversationDiv = document.createElement('div');
+                    dateConversationDiv.id = 'newDateConversation';
+
+                    const dateHeader = document.createElement('h2');
+                    const formattedDate = new Date(dayData.date).toLocaleDateString('en-GB'); // Format the date as DD/MM/YYYY
+                    dateHeader.textContent = formattedDate;
+
+                    dateConversationDiv.appendChild(dateHeader);
+
+                    dayData.conversations.forEach(convo => {
+                        const messageParagraph = document.createElement('p');
+                        messageParagraph.className = convo.sender; // Add class based on sender
+                        messageParagraph.textContent = convo.message;
+                        dateConversationDiv.appendChild(messageParagraph);
+                    });
+
+                    parentDiv.appendChild(dateConversationDiv);
+                });
+            }
+        } else if (result.status === 'error' && result.message === 'No conversations found for this user') {
+            const noChatsHeader = document.createElement('h1');
+            noChatsHeader.textContent = 'No chats Found!';
+            parentDiv.appendChild(noChatsHeader);
+        } else {
+            console.error('Failed to fetch messages');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+fetchAndRenderMessages();
+</script>
+
+
+
+<style>
+	#newDateConversation .user{
+		width:300px;
+		padding:20px;
+		background:#c0dbef;
+		border-radius:5px;
+		margin:10px 0;
+		margin-right:-500px;
+	}
+	#chatHistoryDiv{
+		max-height:1000px;
+		overflow:auto;
+	}
+	#chatHistoryDiv h2{
+		margin-top:30px;
+		margin-bottom:10px;
+	}
+	#newDateConversation .chatbot{
+		width:300px;
+		padding:20px;
+		background:#ebe0b4;
+		border-radius:5px;
+		margin:10px 0;
+		margin-left:-450px;
+	}
+</style>
 
 
 
 <div class="forum" id="healthDiv" >
 <div style="background:#d7b0f4; display:flex;justify-content:center;align-items:center; flex-direction:column; width:50%; padding:30px; border-radius:5px;
-margin-top:3%;">
+margin-top:3%;position:relative;">
+  <button onClick="hidescreen()" class="absButton"><i class="fa fa-times"></i></button>
 <h1>Mental Health Precautionary Measures!</h1>
 			<p style="text-align:justify; ">
 			Taking precautionary measures for mental health involves proactive strategies to maintain and enhance psychological well-being. Regular physical exercise, such as walking, swimming, or yoga, supports both physical and mental health by releasing endorphins and reducing stress. Practicing mindfulness and relaxation techniques, including meditation, deep breathing, and progressive muscle relaxation, helps manage stress and cultivate a sense of calm. Maintaining a balanced diet, rich in essential nutrients, promotes overall brain health and emotional stability. Ensuring adequate, quality sleep by following a consistent sleep schedule is crucial for mental health.
@@ -271,8 +424,9 @@ Regularly practicing self-reflection and self-care activities ensures ongoing me
 
 
 
-<div class="forum" id="divTwo">
+<div class="forum" id="divTwo" style="position:relative;">
 
+  <button onClick="hidescreen()" class="absButton absButtonCommunity" >Close</button>
 <h1>Welcome to the Emocare Blogs!</h1>
 		<div class="forumInput">
 		<form id="forumForm">		
@@ -738,10 +892,10 @@ circle.style.background = `conic-gradient(
 		.editProfile{
 			position:absolute;
 			top:50%;
-			left:50%;
+			left:55%;
 			transform:translate(-50%,-50%);
-			width:400px;
-			padding:20px;
+			width:600px;
+			padding:50px;
 			background:#fff;
 			box-shadow:0 10px 20px rgba(0,0,0,0.4);
 			display:none;
@@ -788,6 +942,8 @@ circle.style.background = `conic-gradient(
     </div>
 
 	<div class="editProfile" id="divOne">
+	
+  <button onClick="hidescreen()" class="absButton"><i class="fa fa-times"></i></button>
 	<center>	 <h1>Update your Profile!</h1>
             </center>     
 				 <form id="updateForm" style="display:flex;flex-direction:column; justify-content:center; align-items:center; width:100%;"> 
@@ -867,7 +1023,7 @@ const depressionDivOne = document.getElementById("depressionDiv");
 const stressDivOne = document.getElementById("stressDiv");
 const healthDivOne = document.getElementById("healthDiv");
 
-
+const chatHistory = document.getElementById("chatHistoryDiv");
 
 
 function editButton(){
@@ -886,7 +1042,24 @@ function communityButton(){
 	stressDivOne.style.display = "none";
 	healthDivOne.style.display = "none";
 	anxietyDivOne.style.display = "none";
+	
+	chatHistory.style.display = "none";
 
+}
+
+
+function chatHistoryButton(){
+	
+	 dashboardDivOne.style.display = "none";
+	 dashboardDivThree.style.display = "none";
+	 dashboardDivTwo.style.display = "none";
+	  
+	 depressionDivOne.style.display = "none";
+	stressDivOne.style.display = "none";
+	healthDivOne.style.display = "none";
+	anxietyDivOne.style.display = "none";
+
+	chatHistory.style.display = "flex";
 }
 
 function homeButton(){
@@ -899,6 +1072,23 @@ function homeButton(){
 	stressDivOne.style.display = "none";
 	healthDivOne.style.display = "none";
 	anxietyDivOne.style.display = "none";
+	
+	chatHistory.style.display = "none";
+	
+}
+
+function hidescreen(){
+	
+	 dashboardDivOne.style.display = "none";
+	 dashboardDivThree.style.display = "block";
+	 dashboardDivTwo.style.display = "none";
+	
+	depressionDivOne.style.display = "none";
+	stressDivOne.style.display = "none";
+	healthDivOne.style.display = "none";
+	anxietyDivOne.style.display = "none";
+	
+	chatHistory.style.display = "none";
 	
 }
 
@@ -920,6 +1110,8 @@ function anxietyShow(){
 	stressDivOne.style.display = "none";
 	healthDivOne.style.display = "none";
 	
+	chatHistory.style.display = "none";
+	
 	
 	
 }
@@ -932,6 +1124,8 @@ function depressionShow(){
 	stressDivOne.style.display = "none";
 	healthDivOne.style.display = "none";
 	anxietyDivOne.style.display = "none";
+	
+	chatHistory.style.display = "none";
 
 }
 
@@ -943,6 +1137,8 @@ function stressShow(){
 		depressionDivOne.style.display = "none";
 	healthDivOne.style.display = "none";
 	anxietyDivOne.style.display = "none";
+	
+	chatHistory.style.display = "none";
 
 }
 
@@ -954,6 +1150,8 @@ function healthShow(){
 		depressionDivOne.style.display = "none";
 	stressDivOne.style.display = "none";
 	anxietyDivOne.style.display = "none";
+	
+	chatHistory.style.display = "none";
 
 }
 
