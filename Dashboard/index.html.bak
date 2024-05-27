@@ -469,7 +469,7 @@ margin-top:3%; position:relative;">
                                 </div>
                             </div>
                         </div>
-                        <div id="messageFormeight" class="card-body msg_card_body" style="width: 76rem; max-height:30vh; overflow-y:auto;">
+                        <div id="messageFormeight" class="card-body msg_card_body" style="width: 76rem; max-height:100vh; overflow-y:auto;">
                             <div class="d-flex justify-content-start mb-4">
                                 <div class="img_cont_msg">
                                     <img src="https://i.ibb.co/tswBQhC/logo.png" class="rounded-circle user_img_msg">
@@ -487,137 +487,218 @@ margin-top:3%; position:relative;">
                                     <button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
                                 </div>
                             </form>
+							 <button id="end-chat-session" class="endChat">End Chat Session</button>
+               
                         </div>
                     </div>
                 </div>
             </div>
+			 <div id="storedDataDisplay" style="position: absolute; top: 50%; left: 55%; transform:translate(-50%,-55%); background-color: white; padding: 50px 70px; border: 1px solid black; display: none;">
+			  <span class="close-icon" onclick="closeThisChatSession()">×</span>
+			 </div>
+    <style>
+	.endChat{
+	background:orange;
+	color:#fff;
+	cursor:pointer;
+	padding:10px 0;
+	width:150px;
+	transition:0.2s ease;
+	border:none;
+	outline:none;
+	margin-left:10px;
+	border-radius:5px;
+	}
+	.endChat:hover{
+		border:2px solid orange;
+		color:orange;
+		background:transparent;
+	}
+	 .close-icon {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+  }</style>
             <script>
-                function getUserIdFromUrlUnique() {
-                    const urlSearchParams = new URLSearchParams(window.location.search);
-                    return urlSearchParams.get('objectId');
+        function getUserIdFromUrlUnique() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            return urlSearchParams.get('objectId');
+        }
+
+        const userIdOfUser = getUserIdFromUrlUnique();
+        let depressionDetectionResponses = JSON.parse(localStorage.getItem('depressionDetectionResponses')) || [];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let chatbottext;
+            const rawTextArray = [];
+            let conversationHistory = [];
+
+            const messageArea = document.getElementById("messageArea");
+            messageArea.addEventListener("submit", function(event) {
+                // Prevent default form submission
+                event.preventDefault();
+
+                const date = new Date();
+                const hour = date.getHours();
+                const minute = date.getMinutes();
+                const str_time = hour + ":" + minute;
+
+                const rawText = document.getElementById("text").value;
+
+                if (!rawText) {
+                    alert("Please enter a message");
+                    return;
                 }
 
-                const userIdOfUser = getUserIdFromUrlUnique();
-                
-				
-                document.addEventListener("DOMContentLoaded", function() {
-                    let chatbottext;
-                    const rawTextArray = [];
-                    let conversationHistory = [];
-                
-                    const messageArea = document.getElementById("messageArea");
-                    messageArea.addEventListener("submit", function(event) {
-                        // Prevent default form submission
-                        event.preventDefault();
-                
-                        const date = new Date();
-                        const hour = date.getHours();
-                        const minute = date.getMinutes();
-                        const str_time = hour + ":" + minute;
-                        
-                        const rawText = document.getElementById("text").value;
-                
-                        if (!rawText) {
-                            alert("Please enter a message");
-                            return;
-                        }
-                
-                        conversationHistory.push({ role: 'user', content: rawText });
-                        console.log("Conversation History:", conversationHistory);
-                
-                        rawTextArray.push(rawText);
-                        console.log("Raw Text Array:", rawTextArray);
-                
-                        const userHtml = `
-                          <div class="d-flex justify-content-end mb-4">
-                            <div class="msg_cotainer_send">${rawText}<span class="msg_time_send">${str_time}</span></div>
-                            <div class="img_cont_msg"><img src="https://i.ibb.co/t4cHsvf/user.jpg" class="rounded-circle user_img_msg"></div>
-                          </div>`;
-                
-                        document.getElementById("text").value = ""; // Clear the input field
-                        document.getElementById("messageFormeight").appendChild(createHTMLElement(userHtml));
-                
-                        fetch('https://mental-health-backend-one.vercel.app/messages', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                userId: userIdOfUser,
-                                message: rawText,
-                                sender: "user"
-                            })
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                console.log('User message submitted successfully!');
-                            } else {
-                                console.log('Error submitting user message!');
-                            }
-                        });
-                
-                        fetch('https://shahzaib201-carl-llama-13b.hf.space/llm_on_cpu', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ prompt: rawText })
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log("Response Data:", data);
-                            chatbottext = data;
-                
-                            conversationHistory.push({ role: 'chatbot', content: data });
-                
-                            const botHtml = `
-                              <div class="d-flex justify-content-start mb-4">
-                                <div class="img_cont_msg"><img src="https://i.ibb.co/tswBQhC/logo.png" class="rounded-circle user_img_msg"></div>
-                                <div class="msg_cotainer">${data}<span class="msg_time">${str_time}</span></div>
-                              </div>`;
-                
-                            document.getElementById("messageFormeight").appendChild(createHTMLElement(botHtml));
-                
-                            fetch('https://mental-health-backend-one.vercel.app/messages', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    userId: userIdOfUser,
-                                    message: chatbottext,
-                                    sender: "chatbot"
-                                })
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    console.log('Assistant message submitted successfully!');
-                                } else {
-                                    console.log('Error submitting assistant message!');
-                                }
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error sending prompt:', error);
-                            alert("There was an error sending your message. Please try again later.");
-                        });
-                    });
-                
-                    console.log("Raw Text Array Initialized:", rawTextArray);
+                conversationHistory.push({ role: 'user', content: rawText });
+                console.log("Conversation History:", conversationHistory);
+
+                rawTextArray.push(rawText);
+                console.log("Raw Text Array:", rawTextArray);
+
+                const userHtml = `
+                  <div class="d-flex justify-content-end mb-4">
+                    <div class="msg_cotainer_send">${rawText}<span class="msg_time_send">${str_time}</span></div>
+                    <div class="img_cont_msg"><img src="https://i.ibb.co/t4cHsvf/user.jpg" class="rounded-circle user_img_msg"></div>
+                  </div>`;
+
+                document.getElementById("text").value = ""; // Clear the input field
+                document.getElementById("messageFormeight").appendChild(createHTMLElement(userHtml));
+
+                fetch('https://mental-health-backend-one.vercel.app/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: userIdOfUser,
+                        message: rawText,
+                        sender: "user"
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('User message submitted successfully!');
+                    } else {
+                        console.log('Error submitting user message!');
+                    }
                 });
-                
-                function createHTMLElement(htmlString) {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(htmlString, 'text/html');
-                    return doc.body.firstChild;
-                }
-            </script>
 
+                fetch('https://shahzaib201-llm-deployment-zerocost-api.hf.space/depression_detection', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: rawText })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Depression Detection Response:", data);
+                    depressionDetectionResponses.push(data);
+                    localStorage.setItem('depressionDetectionResponses', JSON.stringify(depressionDetectionResponses));
+                })
+                .catch(error => {
+                    console.error('Error sending prompt:', error);
+                    alert("There was an error sending your message. Please try again later.");
+                });
+
+                fetch('https://shahzaib201-carl-llama-13b.hf.space/llm_on_cpu', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: rawText })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Response Data:", data);
+                    chatbottext = data;
+
+                    conversationHistory.push({ role: 'chatbot', content: data });
+
+                    const botHtml = `
+                      <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg"><img src="https://i.ibb.co/tswBQhC/logo.png" class="rounded-circle user_img_msg"></div>
+                        <div class="msg_cotainer">${data}<span class="msg_time">${str_time}</span></div>
+                      </div>`;
+
+                    document.getElementById("messageFormeight").appendChild(createHTMLElement(botHtml));
+
+                    fetch('https://mental-health-backend-one.vercel.app/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userId: userIdOfUser,
+                            message: chatbottext,
+                            sender: "chatbot"
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('chatbot message submitted successfully!');
+                        } else {
+                            console.log('Error submitting assistant message!');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error sending prompt:', error);
+                    alert("There was an error sending your message. Please try again later.");
+                });
+            });
+
+            console.log("Raw Text Array Initialized:", rawTextArray);
+
+            document.getElementById("end-chat-session").addEventListener("click", function() {
+               const storedData = JSON.parse(localStorage.getItem('depressionDetectionResponses')) || [];
+                const storedDataDisplay = document.getElementById("storedDataDisplay");
+               
+                if (storedData.length > 0) {
+                    let totalScore = 0;
+                    storedData.forEach((response, index) => {
+                        const label = response[0].label;
+                        const score = response[0].score;
+                        totalScore += score;
+                        const message = `Message ${index + 1}: ${label} with a probability of ${(score * 100).toFixed(2)}%`;
+                        storedDataDisplay.innerHTML += `<p style="margin-bottom:15px;">${message}</p>`;
+                    });
+
+                    const averageScore = totalScore / storedData.length;
+                    const avgMessage = `Average probability of depression: ${(averageScore * 100).toFixed(2)}%`;
+                    storedDataDisplay.innerHTML += `<p style="margin-bottom:15px;"><strong>${avgMessage}</strong></p>`;
+                } else {
+                    storedDataDisplay.innerHTML += '<p>You have not interacted with Mental Health Bot.</p>';
+                }
+
+                storedDataDisplay.style.display = 'block';
+            });
+        });
+
+        function createHTMLElement(htmlString) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, 'text/html');
+            return doc.body.firstChild;
+        }
+		  function closeThisChatSession() {
+        localStorage.removeItem('depressionDetectionResponses');
+        window.location.reload();
+    }
+    </script>
 
 
 </div>
